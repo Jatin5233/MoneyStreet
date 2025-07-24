@@ -27,7 +27,7 @@ main()
 // Middleware
 
 app.use(cors({
-    origin: 'https://celebrated-entremet-f89d5e.netlify.app/', // Your React app's URL
+    origin: 'https://celebrated-entremet-f89d5e.netlify.app', // Your React app's URL
     credentials: true
 }));
 app.use(express.json({ limit: "40kb" }));
