@@ -25,7 +25,7 @@ main()
     .catch(err => console.error("Database connection error:", err));
 
 // Middleware
-app.set("port", process.env.PORT || 8000);
+
 app.use(cors({
     origin: 'http://localhost:5173', // Your React app's URL
     credentials: true
@@ -71,9 +71,9 @@ passport.deserializeUser(User.deserializeUser());
 // Routes
 app.use("/users", user);
 
-// Start server
-app.listen(app.get("port"), () => {
-    console.log(`Server running on port ${app.get("port")}`);
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app;
