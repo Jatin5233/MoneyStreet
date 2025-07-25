@@ -36,7 +36,7 @@ app.use(express.urlencoded({ limit: "40kb", extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET_KEY,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     sameSite: 'none',     // 'lax' or 'none' (depends on browser)
     secure: true,       // set to true if using HTTPS
