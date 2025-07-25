@@ -133,7 +133,7 @@ export async function sendOtp(req,res){
 export function verifyOtp(req,res){
    const { phoneNo, otp } = req.body;
 
-  const storedOtp = otpStore.get(phone);
+  const storedOtp = otpStore.get(phoneNo);
 
   if (storedOtp && storedOtp.toString() === otp) {
     otpStore.delete(phoneNo); // Clear OTP after successful verification
