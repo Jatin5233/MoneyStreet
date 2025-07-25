@@ -71,6 +71,7 @@ export async function login(req, res,next){
 
     req.logIn(user, (err) => {
       if (err) return next(err);
+      console.log("Session after login:", req.session); // ADD THIS
       return res.status(200).json({ success: true, message: 'Logged in successfully', user });
     });
   })(req, res, next);
