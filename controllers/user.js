@@ -95,7 +95,7 @@ export function logout(req, res) {
 
 const otpStore=new Map()
 export async function sendOtp(req,res){
-    const { phone } = req.body;
+    const { phoneNo } = req.body;
 
   // Generate 6-digit OTP
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -105,7 +105,7 @@ export async function sendOtp(req,res){
     const response = await axios.post('https://www.fast2sms.com/dev/bulkV2', {
       variables_values: otp,
       route: 'otp',
-      numbers: phone
+      numbers: phoneNo
     }, {
       headers: {
         authorization: process.env.FAST_API_KEY, // Replace with your key
@@ -114,7 +114,7 @@ export async function sendOtp(req,res){
     });
 
     // Store OTP against phone number
-    otpStore.set(phone, otp);
+    otpStore.set(phoneNo, otp);
 
     // Optionally expire OTP after 2 mins
     setTimeout(() => otpStore.delete(phone), 2 * 60 * 1000);
@@ -127,12 +127,12 @@ export async function sendOtp(req,res){
   }
 }
 export function verifyOtp(req,res){
-   const { phone, otp } = req.body;
+   const { phoneNo, otp } = req.body;
 
   const storedOtp = otpStore.get(phone);
 
   if (storedOtp && storedOtp.toString() === otp) {
-    otpStore.delete(phone); // Clear OTP after successful verification
+    otpStore.delete(phoneNo); // Clear OTP after successful verification
     res.json({ success: true, message: 'OTP verified successfully' });
   } else {
     res.status(400).json({ success: false, message: 'Invalid OTP' });
