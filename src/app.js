@@ -33,14 +33,18 @@ app.use(cors({
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
+app.set('trust proxy', 1); // must be above session
+
+
 app.use(session({
-  secret: process.env.SESSION_SECRET_KEY,
+   secret: process.env.SESSION_SECRET_KEY,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    sameSite: 'none',     // 'lax' or 'none' (depends on browser)
-    secure: true,       // set to true if using HTTPS
-    maxAge: 24 * 60 * 60 * 1000
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
 }));
 
