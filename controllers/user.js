@@ -44,6 +44,10 @@ export async function signUp(req, res) {
                 email: newUser.email
             }
         });
+         req.login(newUser, (err) => {
+      if (err) return next(err);
+      return res.status(200).json({ message: "Signup & login successful", user: newUser });
+    });
   } catch (err) {
     console.error(err);
     res.status(400).json({ success: false, message: err.message });
