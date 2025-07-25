@@ -38,8 +38,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    sameSite: 'lax',     // 'lax' or 'none' (depends on browser)
-    secure: false,       // set to true if using HTTPS
+    sameSite: 'none',     // 'lax' or 'none' (depends on browser)
+    secure: true,       // set to true if using HTTPS
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
