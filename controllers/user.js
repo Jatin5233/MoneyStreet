@@ -36,18 +36,18 @@ export async function signUp(req, res) {
     const newUser = new User({ username, email, phoneNo });
     await User.register(newUser, password); // handles hashing internally
     await newUser.save();
-     res.status(httpStatus.CREATED).json({ 
-            message: "User created successfully",
-            user: {
-                id: newUser._id,
-                name: newUser.username,
-                email: newUser.email
-            }
-        });
-         req.login(newUser, (err) => {
-      if (err) return next(err);
-      return res.status(200).json({ message: "Signup & login successful", user: newUser });
+     req.login(newUser, (err) => {
+    if (err) return next(err);
+
+    return res.status(201).json({
+      message: "Signup & login successful",
+      user: {
+        id: newUser._id,
+        name: newUser.username,
+        email: newUser.email
+      }
     });
+  });
   } catch (err) {
     console.error(err);
     res.status(400).json({ success: false, message: err.message });
